@@ -1,0 +1,7 @@
+{
+  "restartable": "r",
+  "watch": ["./src"],
+  "exec": "tsx src/main.ts",
+  "ext": "ts",
+  "verbose": true
+}
