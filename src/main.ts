@@ -1,7 +1,26 @@
-import { ForecastController } from "./controllers/Forecast.controller";
+import { Server } from "@overnightjs/core";
+import { PlaygroundController } from "./controllers/Playground.controller";
+import express from "express";
 
-console.log("olá");
+class LayerServer extends Server {
+  constructor(protected portApp: number) {
+    super();
+    this.setupMiddlewares();
+    this.setupControllers();
+  }
 
-const forecastController = new ForecastController();
+  setupMiddlewares() {
+    this.app.use(express.json());
+  }
+  setupControllers() {
+    this.addControllers([new PlaygroundController()]);
+  }
+  startServer() {
+    this.app.listen(this.portApp, () => {
+      console.log(`Server: is running in port: ${this.portApp}`);
+    });
+  }
+}
 
-forecastController.logger();
+const server = new LayerServer(3100);
+server.startServer();
